@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block header %}
+<a href="{% url 'home' %}">Профиль</a>
+<a href="">Пополнение</a>
+<a href="">Выплаты</a>
+<a href="{% url 'history' %}">История</a>
+<a href="{% url 'identify' %}">Идентификация</a>
+{% endblock %}
+{% block content %}
+<hr>
+{% for i in bets %}
+  <div class="">
+    {{i.event.match.team1}} X {{i.event.match.team2}} , сумма ставки - {{ i.sum }},коэффициент - {{ i.coefficient }}
+  </div>
+
+{% endfor %}
+
+{% endblock %}

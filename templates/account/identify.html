@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block header %}
+<a href="{% url 'home' %}">Профиль</a>
+<a href="">Пополнение</a>
+<a href="">Выплаты</a>
+<a href="{% url 'history' %}">История</a>
+<a href="{% url 'identify' %}">Идентификация</a>
+{% endblock %}
+{% block content %}
+
+  <hr>
+  {% if messages %}
+  <ul>
+     {% for message in messages %}
+  	   <li>{{ message }}</li>
+     {% endfor %}
+  </ul>
+  <hr>
+  {% endif %}
+
+  <div class="">
+    <h3>Идентификация</h3>
+    <form method="post" action="{% url 'edit' user.id %}">
+      {% csrf_token %}
+        <p>
+            <label>ФИО</label><br>
+            <input type="text" name="name" value="{{user.first_name}}" />
+        </p>
+        <p>
+            <label>E-mail</label><br>
+            <input type="text" name="email" value="{{user.email}}" />
+        </p>
+        <p>
+            <label>Адрес проживания</label><br>
+            <input type="text" name="location" value="{{user.location}}" />
+        </p>
+        <p>
+            <label>Телефон</label><br>
+            <input type="number" name="number" value="{{user.number}}" />
+        </p>
+        <input type="submit" name="" value="Подтвердить">
+    </form>
+  </div>
+
+{% endblock %}

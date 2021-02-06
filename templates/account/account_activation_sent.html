@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block header %}
+<a href="{% url 'home' %}">Профиль</a>
+<a href="">Пополнение</a>
+<a href="">Выплаты</a>
+<a href="{% url 'history' %}">История</a>
+<a href="{% url 'identify' %}">Идентификация</a>
+{% endblock %}
+{% block content %}
+  {% if request.user.email != '' %}
+  <p>Мы отправили вам сообщение.Пожалуйста подтвердите e-mail. </p>
+  {% else %}
+  <p>Вы не указали почту,укажите ее в разделе идентификация</p>
+  {% endif %}
+{% endblock %}

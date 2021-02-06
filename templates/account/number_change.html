@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block header %}
+<a href="{% url 'home' %}">Профиль</a>
+<a href="">Пополнение</a>
+<a href="">Выплаты</a>
+<a href="{% url 'history' %}">История</a>
+<a href="{% url 'identify' %}">Идентификация</a>
+{% endblock %}
+{% block content %}
+<hr>
+  <div class="">
+    <a href="{% url 'home' %}">Общие данные</a>
+    <a href="#">Смена номера телефона</a>
+    {% if user.email_confirm %}
+      <a href="#">Ваш email подтвержден</a>
+    {% else %}
+      <a href="{% url 'signup_activate' user.id %}">Подтвердите ваш email</a>
+    {% endif %}
+    <a href="{% url 'change_password' %}">Смена пароля</a>
+    <a href="#">Рассылки и уведомления</a>
+  </div>
+  <hr>
+<h3>Смена Номера</h3>
+<form method="post">
+  {% csrf_token %}
+  <input type="number" name="number" value="">
+  <input type="submit"  value="Отправить">
+</form>
+
+{% endblock %}

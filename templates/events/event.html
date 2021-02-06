@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+  {% if messages %}
+  <ul>
+     {% for message in messages %}
+       <li>{{ message }}</li>
+     {% endfor %}
+  </ul>
+  <hr>
+  {% endif %}
+<h1>Сделать ставку</h1>
+<form method="post">
+  {% csrf_token %}
+  <input type="number" name="sum" value="">
+  <input type="submit" name="" value="Сделать ставку">
+</form>
+{% else %}
+
+  <h1>Вы не авторизованны</h1>
+
+{% endif %}
+
+{% endblock %}

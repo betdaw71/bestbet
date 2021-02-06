@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h1>{{ match.team1 }} VS {{ match.team2 }}</h1>
+
+{% for i in match.events.all %}
+
+  <div class="">
+    <a href="{% url 'event' match.pk i.pk %}">{{ i.name }}   -    {{ i.coefficient }}</a>
+  </div>
+{% endfor %}
+{% endblock %}

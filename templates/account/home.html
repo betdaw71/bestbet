@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block header %}
+<a href="{% url 'home' %}">Профиль</a>
+<a href="">Пополнение</a>
+<a href="">Выплаты</a>
+<a href="{% url 'history' %}">История</a>
+<a href="{% url 'identify' %}">Идентификация</a>
+{% endblock %}
+{% block content %}
+<hr>
+  <div class="">
+    <a href="{% url 'home' %}">Общие данные</a>
+    <a href="{% url 'number_change' user.id %}">Смена номера телефона</a>
+    {% if user.email_confirm %}
+      <a href="#">Ваш email подтвержден</a>
+    {% else %}
+      <a href="{% url 'signup_activate' user.id  %}">Подтвердите ваш email</a>
+    {% endif %}
+    <a href="{% url 'change_password' %}">Смена пароля</a>
+    <a href="#">Рассылки и уведомления</a>
+  </div>
+  <h4></h4>
+  <hr>
+  {% if messages %}
+  <ul>
+     {% for message in messages %}
+  	   <li>{{ message }}</li>
+     {% endfor %}
+  </ul>
+  <hr>
+  {% endif %}
+  <img src="{{ user.photo.url }}" alt="">
+  <h3>Личные данные</h3>
+  <table>
+    <tr><td>Имя игрока:</td><td>{{ user.first_name }}</td></tr>
+    <tr><td>Валюта счета:</td><td>{{ user.currency }}</td></tr>
+    <tr><td>Номер счета:</td><td>10000{{ user.pk }}</td></tr>
+    <tr><td>Баланс:</td><td>{{ user.balance }}</td></tr>
+  </table>
+  <h3>Контактные данные</h3>
+  <table>
+    <tr><td>Телефон:</td><td>{{ user.number }}</td></tr>
+    <tr><td>E-mail:</td><td>{{ user.email }}</td></tr>
+  </table>
+{% endblock %}
