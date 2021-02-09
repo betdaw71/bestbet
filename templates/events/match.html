@@ -8,7 +8,7 @@
 {% for i in match.events.all %}
 
   <div class="">
-    <a href="{% url 'event' match.pk i.pk %}">{{ i.name }}   -    {{ i.coefficient }}</a>
+    <a href="{% url 'event' match.pk i.pk %}">{{ i.title }}   -    {{ i.coefficient }}</a>
   </div>
 {% endfor %}
 {% endblock %}

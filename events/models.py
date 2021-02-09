@@ -2,8 +2,10 @@ from django.db import models
 from account.models import User
 # Create your models here.
 
+
 class Sport(models.Model):
     name = models.CharField(max_length=150,default='Unknown')
+    sport_id = models.CharField(max_length=50,default='Unknown')
     def __str__(self):
         return self.name
 
@@ -17,7 +19,8 @@ class Match(models.Model):
     team1 = models.ForeignKey(Team,on_delete=models.CASCADE,related_name='team1')
     team2 = models.ForeignKey(Team,on_delete=models.CASCADE,related_name='team2')
     live = models.BooleanField(default=False)
-
+    score = models.CharField(max_length=200,default='0:0')
+    match_id = models.CharField(max_length=200,default='0')
     def __str__(self):
         return '%s vs %s'%(self.team1,self.team2)
 
@@ -25,6 +28,7 @@ class Event(models.Model):
     match = models.ForeignKey(Match,on_delete=models.CASCADE,default=1,related_name='events')
     coefficient = models.FloatField(default=1.5)
     name = models.CharField(max_length=150,default='Unknown')
+    title = models.CharField(max_length=200,default='Unknown')
     def __str__(self):
         return self.name
 

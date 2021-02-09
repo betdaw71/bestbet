@@ -14,7 +14,7 @@
 
       <tr>
         <td>{{ i.sport.name }}</td>
-        <td><a href="{% url 'match' i.pk %}">{{ i.team1.name }} X {{ i.team2.name }}</a></td>
+        <td><a href="{% url 'match' i.pk %}">{{ i.team1.name }} X {{ i.team2.name }} -- {{ i.score }}</a></td>
       </tr>
 
   {% endfor %}

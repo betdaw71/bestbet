@@ -3,8 +3,21 @@ from django.shortcuts import render, redirect
 from .models import *
 from account.models import User
 from django.contrib import messages
+from rest_framework import viewsets
+from .serializers import MatchSerializer,EventSerializer
+from rest_framework import permissions
 
 # Create your views here.
+
+class MatchViewSet(viewsets.ModelViewSet):
+    queryset = Match.objects.all()
+    serializer_class = MatchSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class EventViewSet(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 def list(request):
     events = Match.objects.all()

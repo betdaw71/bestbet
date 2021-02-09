@@ -18,6 +18,12 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import render, redirect
+from rest_framework import routers
+from events import views
+
+router = routers.DefaultRouter()
+router.register(r'match', views.MatchViewSet)
+router.register(r'event', views.EventViewSet)
 
 # def main(request):
 #     if request.user.is_authentificated:
@@ -30,4 +36,6 @@ urlpatterns = [
     # path('',main,name='main'),
     path('account/',include('account.urls')),
     path('events/',include('events.urls')),
+    path('api/', include(router.urls)),
+    path('api-auth/',include('rest_framework.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+ static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
