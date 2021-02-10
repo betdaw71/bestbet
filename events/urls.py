@@ -3,7 +3,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('list/',views.list,name='list'),
-    path('match/<int:pk>',views.match,name='match'),
-    path('match/<int:match>/<int:event>',views.event,name='event'),
+    path('match/',views.list,name='list'),
+    path('match/<str:match_id>',views.match,name='match'),
+    path('match/<str:match_id>/<int:event>',views.event,name='event'),
 ]

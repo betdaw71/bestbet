@@ -39,7 +39,7 @@ class User(AbstractUser):
     photo = models.ImageField(upload_to='account',default='default-user.jpeg')
     bill_id=models.CharField(max_length=100, null=True, blank=True, unique=True)
     balance = models.IntegerField(default=0)
-    USERNAME_FIELD = 'email'
+    # USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     def __str__(self):
         return self.email

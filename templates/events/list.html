@@ -4,20 +4,60 @@
 {% block content %}
 
   <h1>Список всех матчей</h1>
-<table>
-  <tr>
-    <th>Спорт</th>
-    <th>Название</th>
+  <div id="app">
 
-  </tr>
-  {% for i in events %}
-
+    <table>
       <tr>
-        <td>{{ i.sport.name }}</td>
-        <td><a href="{% url 'match' i.pk %}">{{ i.team1.name }} X {{ i.team2.name }} -- {{ i.score }}</a></td>
+        <th>Спорт</th>
+        <th>Название</th>
+
       </tr>
 
-  {% endfor %}
-</table>
+
+        </div>
+          <tr v-for='match in matches'>
+            <td>[[ match.sport ]]</td>
+            <td><a v-bind:href="match.match_id">[[match.team1]]X[[match.team2]] - [[match.score]]</a></td>
+          </tr>
+
+    </table>
+  </div>
+
+
+  <script type="text/javascript">
+
+    const vm = new Vue({
+                el: '#app',
+                delimiters: ["[[", "]]"],
+                data() {
+                    return {
+                        matches: [],
+                    };
+                },
+                mounted: function () {
+                  window.setInterval(() => {
+                    axios.get('/api/match/').then((response) => {
+                        this.matches = response.data;
+                        // console.log(response.data)
+                    });
+                  }, 500)
+                },
+                // created() {
+                //     axios.get('/api/match/').then((response) => {
+                //         this.matches = response.data;
+                //         console.log(response.data)
+                //     });
+                //     // axios.get('/stocks/portfolios/').then((response) => {
+                //     //     this.portfolios = response.data;
+                //     // });
+                // },
+          });
+  </script>
+
+
+
+
+
+
 
 {% endblock %}

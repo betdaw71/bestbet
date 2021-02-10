@@ -15,12 +15,14 @@ class Team(models.Model):
         return self.name
 
 class Match(models.Model):
-    sport = models.ForeignKey(Sport,on_delete=models.CASCADE)
+    sport = models.ForeignKey(Sport,on_delete=models.CASCADE,related_name='sport')
     team1 = models.ForeignKey(Team,on_delete=models.CASCADE,related_name='team1')
     team2 = models.ForeignKey(Team,on_delete=models.CASCADE,related_name='team2')
     live = models.BooleanField(default=False)
     score = models.CharField(max_length=200,default='0:0')
     match_id = models.CharField(max_length=200,default='0')
+    active = models.BooleanField(default=True)
+
     def __str__(self):
         return '%s vs %s'%(self.team1,self.team2)
 
@@ -29,6 +31,7 @@ class Event(models.Model):
     coefficient = models.FloatField(default=1.5)
     name = models.CharField(max_length=150,default='Unknown')
     title = models.CharField(max_length=200,default='Unknown')
+    win = models.BooleanField(default=False)
     def __str__(self):
         return self.name
 

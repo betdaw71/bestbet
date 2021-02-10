@@ -4,11 +4,42 @@
 {% block content %}
 
 <h1>{{ match.team1 }} VS {{ match.team2 }}</h1>
+<div id="app">
+
 
 {% for i in match.events.all %}
 
-  <div class="">
-    <a href="{% url 'event' match.pk i.pk %}">{{ i.title }}   -    {{ i.coefficient }}</a>
+  <div v-for='event in events'>
+    <a v-bind:href="event.pk">[[ event.title ]]   -   [[event.coefficient]]</a>
   </div>
 {% endfor %}
+</div>
+
+<script type="text/javascript">
+
+  const vm = new Vue({
+              el: '#app',
+              delimiters: ["[[", "]]"],
+              data() {
+                  return {
+                      events: [],
+                  };
+              },
+              mounted: function () {
+                window.setInterval(() => {
+                  let id = window.location.pathname.split('/')[3];
+                  axios.get('/api/event/'+id+'/').then((response) => {
+                      this.events = response.data;
+
+                      // console.log(response.data)
+                  });
+                }, 500)
+              },
+        });
+</script>
+
+
+
+
+
 {% endblock %}

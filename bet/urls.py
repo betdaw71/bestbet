@@ -23,7 +23,7 @@ from events import views
 
 router = routers.DefaultRouter()
 router.register(r'match', views.MatchViewSet)
-router.register(r'event', views.EventViewSet)
+router.register(r'event/(?P<match_id>.*)', views.EventViewSet, basename='MyModel')
 
 # def main(request):
 #     if request.user.is_authentificated:
