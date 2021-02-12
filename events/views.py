@@ -14,7 +14,10 @@ class MatchViewSet(viewsets.ModelViewSet):
     queryset = Match.objects.all()
     serializer_class = MatchSerializer
     # permission_classes = [permissions.IsAuthenticated]
-
+    def get_queryset(self):
+        ido = self.kwargs['sport']
+        return Match.objects.filter(sport=Sport.objects.get(name=ido))
+    
 class EventViewSet(viewsets.ModelViewSet):
     serializer_class = EventSerializer
     # permission_classes = [permissions.IsAuthenticated]
@@ -23,26 +26,31 @@ class EventViewSet(viewsets.ModelViewSet):
         return Event.objects.filter(match=Match.objects.get(match_id=id))
 
 
-def list(request):
+def list(request,sport='soccer'):
     events = Match.objects.all()
+    sports = Sport.objects.all()
+    
     data={
-        'events' : events
+        'events' : events,
+        'sports' : sports,
+        'sport':Sport.objects.get(name=sport),
     }
     return render(request, 'events/list.html',context=data)
 
-def match(request,match_id):
+def match(request,sport,match_id):
     match = Match.objects.get(match_id=match_id)
     data = {
         'match' : match
     }
     return render(request,'events/match.html',context=data)
 
-def event(request,match_id,event):
+def event(request,sport,match_id,event):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
         if user.balance >= int(request.POST.get('sum')):
             eventD = Event.objects.get(id=event)
-            bet = Bet.objects.create(event=eventD,user=user, sum=int(request.POST.get('sum')), coefficient=eventD.coefficient)
+            match = Match.objects.get(match_id=match_id)
+            bet = Bet.objects.create(event=eventD,match=match,user=user, sum=int(request.POST.get('sum')), coefficient=eventD.coefficient)
             user.balance -= int(request.POST.get('sum'))
             user.save()
             return render(request,'events/sucsess.html')
@@ -50,4 +58,21 @@ def event(request,match_id,event):
             messages.error(request,'Недостаточно средств')
     else:
         pass
-    return render(request,'events/event.html')
+    data = {
+        'sport':sport,
+        'match_id':match_id,
+        'event':event,
+    }
+    return render(request,'events/event.html',context=data)
+
+
+def express(request,sport,match_id,event):
+    user = User.objects.get(id=request.user.id)
+    express = Express.objects.filter(user=user)
+    data={
+        'express':express,
+    }
+    return render(request,'events/express_all.html',context=data)
+
+def express_add(request):
+    return render(request,'events/express_add.html')

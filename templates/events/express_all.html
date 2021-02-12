@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+  {% if messages %}
+  <ul>
+     {% for message in messages %}
+       <li>{{ message }}</li>
+     {% endfor %}
+  </ul>
+  <hr>
+  {% endif %}
+<h1>Добавить в express</h1>
+{% for i in express %}
+    <div>Сумма - {{i.sum}}  Ставки:
+    {% for k in i.bets.all %}
+        {{ k.match.team1 }} X {{ k.match.team2 }} - {{k.coefficient}},
+    {% endfor %}
+    </div>
+{% endfor %}
+
+<a href="">Создать новый Express</a>
+{% else %}
+
+  <h1>Вы не авторизованны</h1>
+
+{% endif %}
+
+{% endblock %}

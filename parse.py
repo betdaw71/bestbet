@@ -50,13 +50,14 @@ def on_message(ws, message):
             try:
                 match = Match.objects.get(match_id=id)
                 try:
-                    event = match.events.all.get(name=name)
+                    event = Event.objects.filter(match=match).get(name=name)
                     event.coefficient = float(coefficient)
                     event.save()
                     print('Event have been updated')
-                except:
+                except Exception as e:
                     event = Event.objects.create(match=match,coefficient=float(coefficient),name=name,title=title)
                     print('Event have been created')
+                    print(str(e))
             except:
                 print('Match does not exist')
             # print('Market  - ',id,'   -     ',name,coefficient,title)
@@ -67,8 +68,8 @@ def on_message(ws, message):
         sport_name = message.split('"sport":"')[1].split('"')[0]
         # sport_name1 = message.spli('')
         match_name = message.split('"event_name":"')[1].split('"')[0]
-        team1 = message.split(',')[10].split(':')[1].replace('"','')
-        team2 = message.split(',')[11].split(':')[1].replace('"','')
+        team1 = message.split('"team1":"')[1].split('"')[0]
+        team2 = message.split('"team2":"')[1].split('"')[0]
         league = message.split(',')[12].split(':')[1].replace('"','')
         score =message.split('"score":"')[1].split('"')[0]
 
@@ -99,7 +100,7 @@ def on_message(ws, message):
                 pass
         except:
             match = Match.objects.create(sport=sport,team1=team_one,team2=team_two,score=score,match_id=id)
-            # print('Sucsesfully Added')
+            print('Sucsesfully Added')
         # print('Event  - ',id,'   -    ',sport_id,'  ,  ',sport_name,'  ,  ',match_name,'  ,  ',team1,'  ,  ',team2,'  ,  ',league,'  ,  ',score)
 
 def on_error(ws, error):

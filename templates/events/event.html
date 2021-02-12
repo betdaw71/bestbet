@@ -19,6 +19,7 @@
   <input type="number" name="sum" value="">
   <input type="submit" name="" value="Сделать ставку">
 </form>
+<a href="{% url 'express' sport match_id event %}">добавить в Express</a>
 {% else %}
 
   <h1>Вы не авторизованны</h1>

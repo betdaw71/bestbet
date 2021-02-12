@@ -33,10 +33,30 @@ class Event(models.Model):
     title = models.CharField(max_length=200,default='Unknown')
     win = models.BooleanField(default=False)
     def __str__(self):
-        return self.name
+        return self.title
 
 class Bet(models.Model):
+    match = models.ForeignKey(Match,on_delete=models.CASCADE,default=1,related_name='matchs')
     event = models.ForeignKey(Event,on_delete=models.CASCADE,related_name='bets')
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='users')
     sum = models.IntegerField()
     coefficient = models.FloatField()
+    win = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
+    
+class Express(models.Model):
+    sum = models.IntegerField()
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='usersExpress',default=1)
+    win = models.BooleanField(default=False)
+    
+class BetToExpress(models.Model):
+    match = models.ForeignKey(Match,on_delete=models.CASCADE,default=1,related_name='matchsExpress')
+    event = models.ForeignKey(Event,on_delete=models.CASCADE,related_name='betsExpress')
+    
+    coefficient = models.FloatField()
+    win = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
+    express = models.ForeignKey(Express,on_delete=models.CASCADE,related_name='bets')
+    
+
+    

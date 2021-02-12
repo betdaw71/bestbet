@@ -79,15 +79,29 @@ WSGI_APPLICATION = 'bet.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+#DATABASES = {
+#    'default' : {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'bestbet',
+#        'USER': 'bestbetuser',
+#        'PASSWORD': 'Dageron11'
+#    }
+#}
 DATABASES = {
-    'default' : {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bestbet',
-        'USER': 'bestbetuser',
-        'PASSWORD': 'Dageron11'
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'u1280374_default',
+#        'USER': 'u1280374_default',
+#        'PASSWORD': '!s2H0!ve',
+#        'HOST': 'localhost',
+#    }
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

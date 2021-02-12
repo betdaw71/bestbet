@@ -10,7 +10,10 @@
 <hr>
 {% for i in bets %}
   <div class="">
-    {{i.event.match.team1}} X {{i.event.match.team2}} , сумма ставки - {{ i.sum }},коэффициент - {{ i.coefficient }}
+    {{i.event.match.team1}} X {{i.event.match.team2}} , сумма ставки - {{ i.sum }},коэффициент - {{ i.coefficient }}    --- 
+    {% if i.win %}Победа
+    {% else %}
+    {% endif %}
   </div>
 
 {% endfor %}

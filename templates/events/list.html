@@ -4,6 +4,9 @@
 {% block content %}
 
   <h1>Список всех матчей</h1>
+  {% for i in sports %}
+      <a href="{% url 'list' i.name%}">{{i}}</a>
+  {% endfor %}
   <div id="app">
 
     <table>
@@ -17,7 +20,10 @@
         </div>
           <tr v-for='match in matches'>
             <td>[[ match.sport ]]</td>
-            <td><a v-bind:href="match.match_id">[[match.team1]]X[[match.team2]] - [[match.score]]</a></td>
+            <td><a v-bind:href="'{{sport.name}}/'+match.match_id">[[match.team1]]X[[match.team2]] - [[match.score]]</a></td>
+            <td v-for='k in match.events'><span v-if="k.name==='WIN__P1'">[[k.name]] - [[k.coefficient]]</span></td>
+            <td v-for='k in match.events'><span v-if="k.name==='WIN__PX'">[[k.name]] - [[k.coefficient]]</span></td>
+            <td v-for='k in match.events'><span v-if="k.name==='WIN__P2'">[[k.name]] - [[k.coefficient]]</span></td>
           </tr>
 
     </table>
@@ -36,9 +42,9 @@
                 },
                 mounted: function () {
                   window.setInterval(() => {
-                    axios.get('/api/match/').then((response) => {
+                    axios.get('/api/match/{{sport.name}}').then((response) => {
                         this.matches = response.data;
-                        // console.log(response.data)
+                         console.log(response.data);
                     });
                   }, 500)
                 },
