@@ -21,8 +21,7 @@
     {% endfor %}
     </div>
 {% endfor %}
-
-<a href="">Создать новый Express</a>
+<a href="{{request.path}}/create">Создать новый</a>
 {% else %}
 
   <h1>Вы не авторизованны</h1>
